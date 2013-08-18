@@ -1,0 +1,22 @@
+
+
+" Trying to turn vim into a Python IDE vim resource file.
+
+" Syntax highlighting
+let python_highlight_all = 1
+
+" Smart indenting
+set smartindent cinwords = if,elif,else,for,while,try,except,finally,def,class
+
+" Auto completion via ctrl-space
+set omnifunc = pythoncomplete#Complete
+inoremap <Nul> <C-x><C-o>
+
+" Should get the www.vim.org/scripts/script.php?script_id=1112 script
+" Will allow "K" to give documentation for word under cursor
+" autocmd filetype python source ~/vim/pydoc.vim
+
+" Highlight end of line whitespace
+highlight WhitespaceEOL ctermbg=red guibg=red
+math WhitespaceEOL /\s\+$/
+
