@@ -1,0 +1,179 @@
+"'''''''''''''''''''''"
+" Settings for Vundle '
+"                     '
+"'''''''''''''''''''''"
+" Firstly, a few things for Vundle to automanage things
+set nocompatible
+filetype off                    " required for vundle!
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" let Vundle manage Vundle
+" required!
+Bundle 'gmarik/vundle'
+
+" My Bundles here:
+"
+" original repos on github
+Bundle 'Lokaltog/vim-easymotion'
+Bundle 'ervandew/supertab.git'
+Bundle 'altercation/vim-colors-solarized.git'
+Bundle 'scrooloose/nerdtree'
+Bundle 'jistr/vim-nerdtree-tabs'
+
+" A bunch of repos I've tried for smart django-autocompletion/docs
+"Bundle 'fs111/pydoc.vim'
+"Bundle 'xolox/vim-pyref'
+"Bundle 'lambdalisue/vim-django-support'
+"Bundle 'davidhalter/jedi-vim'
+"Bundle 'klen/python-mode'
+"Bundle 'sontek/rope-vim'
+
+" vim-scripts repos
+Bundle 'vim-scripts/UltiSnips'
+
+" nongithub repos
+"
+" local repos
+
+filetype plugin indent on       " required too!
+"
+" Brief help
+" :BundleList           - list configured bundles
+" :BundleInstall(!)     - install (update) bundles
+" :BundleSearch(!) foo  - search(or refresh cache first) for foo
+" :BundleClean(!)       - confirm(or auto-approve) removal of unused bundles
+"
+" see :h vundle for more details or wiki for FAQ
+" NOTE: comments after Bundle command are not allowed.
+
+
+set showcmd
+set nu
+set nocompatible
+set autoindent 
+set mouse=a
+"set hlsearch
+set ruler
+set title
+set completeopt=menuone,preview,longest
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set softtabstop=4
+set foldmethod=marker
+set laststatus=2
+" Make wordwraps occur on word
+set lbr
+
+" TODO This has to change - but default ruins SuperTab
+let g:UltiSnipsExpandTrigger='<leader>E'
+
+" A few new movements: does overide the original
+map j gj
+map k gk
+noremap H ^
+noremap L $
+
+" Smart way to move between windows
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
+" Set my leader key to , instead of \
+let mapleader = ','
+
+" Make Y act like it should
+nmap Y y$
+
+" Toggle Spell-check
+nmap <silent> <leader>s :set spell!<CR>
+
+if $COLORTERM == 'gnome-terminal'
+    set t_Co=256
+endif
+
+" colorscheme darkblue but with better highlights and folding colors
+" colorscheme myscheme
+syntax enable
+if has('gui_running')
+    set background=dark
+    colorscheme solarized
+else
+    "colorscheme myscheme
+    let g:solarized_termcolors=256
+    set background=light
+    colorscheme solarized
+endif
+
+" Automatically uses plugins, and enables auto indentation
+filetype plugin indent on
+
+"''''''''''''''''''''"
+" Settings for LaTeX '
+"                    '
+"''''''''''''''''''''"
+
+" Custom commands for LaTeX
+" map ,iE i\begin{equation}<cr><cr>\end{equation}<esc>ki<tab>
+" map ,ie i\[<cr><cr>\]<esc>ki<tab>
+" map ,oE o\begin{equation}<cr><cr>\end{equation}<esc>ki<tab>
+" map ,oe o\begin{equation*}<cr><cr>\end{equation*}<esc>ki<tab>
+" 
+" map ,iA i\begin{align}<cr><cr>\end{align}<esc>ki<tab>
+" map ,ia i\begin{align*}<cr><cr>\end{align*}<esc>ki<tab>
+" 
+" map ,an a%NTBC<cr><esc>
+" map ,n /%NTBC<cr>
+" map ,N /%NTBC<cr>
+
+"'''''''''''''''''''''''''''"
+" Settings for vim-latex    
+" plugin
+" ''''''''''''''''''''''''''"
+
+" maps <C-space> to IMAP_JumpForward, which is usually <C-j>. This works
+" because of clever writing in plugin/imap.vim
+imap <NUL> <Plug>IMAP_JumpForward
+nmap <NUL> <Plug>IMAP_JumpForward
+vmap <NUL> <Plug>IMAP_JumpForward
+
+
+" grep will sometimes skip displaying file name if you
+" search in a single file, confusing vim-latex. Set grep to always generate
+" file-name.
+set grepprg=grep\ -nH\ $*
+
+" Set filetype of empty .tex files to 'tex' instead of 'plaintex', which is
+" the default
+let g:tex_flavor='latex'
+
+" Sage settings
+autocmd BufRead,BufNewFile *.sage,*.pyx,*.spyx set filetype=python
+autocmd Filetype python set tabstop=4|set shiftwidth=4|set expandtab
+" autocmd Filetype python set makeprg=sage\ -b\ &&\ sage\ -t\ %
+
+"""""""""""""""""""""""""""
+"  Settings for NERDTree  "
+"""""""""""""""""""""""""""
+" Add a toggle
+map <Leader>a <plug>NERDTreeTabsToggle<CR>
+" TODO it'd be cool if this were intuitive
+
+"''''''''''''''''''''''''''''''
+" Settings for EasyMotion
+"
+" '''''''''''''''''''''''''''''
+" Remap default leader to <Leader> instead of <Leader><Leader>
+let g:EasyMotion_leader_key = '<Leader>'
+
+"''''''''''''''''''''''''''''''
+" Settings for tasklist
+"
+" '''''''''''''''''''''''''''''
+" Remap <Leader>t to <Leader><Leader>t, removing conflict with EasyMotion
+map <Leader><Leader>t <Plug>TaskList
+
+autocmd FileType python set omnifunc=pythoncomplete#Complete
