@@ -21,6 +21,7 @@ Bundle 'ervandew/supertab.git'
 Bundle 'altercation/vim-colors-solarized.git'
 Bundle 'scrooloose/nerdtree'
 Bundle 'jistr/vim-nerdtree-tabs'
+Bundle 'klen/python-mode'
 
 " A bunch of repos I've tried for smart django-autocompletion/docs
 "Bundle 'fs111/pydoc.vim'
@@ -47,7 +48,6 @@ filetype plugin indent on       " required too!
 "
 " see :h vundle for more details or wiki for FAQ
 " NOTE: comments after Bundle command are not allowed.
-
 
 set showcmd
 set nu
@@ -88,6 +88,9 @@ let mapleader = ','
 " Make Y act like it should
 nmap Y y$
 
+" Highlight column 80 as warning and 120 as superdanger
+let &colorcolumn="80,".join(range(120,999),",")
+
 " Toggle Spell-check
 nmap <silent> <leader>s :set spell!<CR>
 
@@ -110,24 +113,6 @@ endif
 
 " Automatically uses plugins, and enables auto indentation
 filetype plugin indent on
-
-"''''''''''''''''''''"
-" Settings for LaTeX '
-"                    '
-"''''''''''''''''''''"
-
-" Custom commands for LaTeX
-" map ,iE i\begin{equation}<cr><cr>\end{equation}<esc>ki<tab>
-" map ,ie i\[<cr><cr>\]<esc>ki<tab>
-" map ,oE o\begin{equation}<cr><cr>\end{equation}<esc>ki<tab>
-" map ,oe o\begin{equation*}<cr><cr>\end{equation*}<esc>ki<tab>
-" 
-" map ,iA i\begin{align}<cr><cr>\end{align}<esc>ki<tab>
-" map ,ia i\begin{align*}<cr><cr>\end{align*}<esc>ki<tab>
-" 
-" map ,an a%NTBC<cr><esc>
-" map ,n /%NTBC<cr>
-" map ,N /%NTBC<cr>
 
 "'''''''''''''''''''''''''''"
 " Settings for vim-latex    
