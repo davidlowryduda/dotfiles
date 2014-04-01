@@ -89,7 +89,8 @@ let mapleader = ','
 nmap Y y$
 
 " Highlight column 80 as warning and 120 as superdanger
-let &colorcolumn="80,".join(range(120,999),",")
+" let &colorcolumn="80,".join(range(120,999),",")
+" THIS DOESN'T WORK ON THIS MACHINE BECAUSE WE HAVE OLD VIM
 
 " Toggle Spell-check
 nmap <silent> <leader>s :set spell!<CR>
@@ -121,8 +122,9 @@ filetype plugin indent on
 
 " maps <C-space> to IMAP_JumpForward, which is usually <C-j>. This works
 " because of clever writing in plugin/imap.vim
-imap <NUL> <Plug>IMAP_JumpForward
+" imap <NUL> <Plug>IMAP_JumpForward
 nmap <NUL> <Plug>IMAP_JumpForward
+imap <s-space> <Plug>IMAP_JumpForward
 vmap <NUL> <Plug>IMAP_JumpForward
 
 
