@@ -1,0 +1,83 @@
+priority -55
+
+snippet template "Standard leqno[11] template" b
+\documentclass[11pt,reqno]{amsart}
+% We ain't got no time for eq. nums. on the left
+
+% The key is redundancy is key
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{amssymb}
+
+% Presented to you by Technicolor, and the number 3
+\usepackage{graphics}
+\usepackage{hyperref}
+\usepackage[usenames, dvipsnames]{xcolor}
+
+% For full page usage, shockingly
+%\usepackage{fullpage}
+
+% For ease in writing labels and references
+%\usepackage{showkeys}
+\usepackage[square,sort,comma,numbers]{natbib}
+
+% For pretty hyperlinks
+\definecolor{darkblue}{rgb}{0.0,0.0,0.3}
+\hypersetup{colorlinks,breaklinks,
+  linkcolor=darkblue,urlcolor=darkblue,
+anchorcolor=darkblue,citecolor=darkblue}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem*{theorem*}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem*{proposition*}{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem*{corollary*}{Corollary}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{question}[theorem]{Question}
+\theoremstyle{definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[theorem]{Exercise}
+
+\numberwithin{equation}{section}
+
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+% Nongross real and imaginary parts
+\renewcommand{\Im}{\operatorname{Im}}
+\renewcommand{\Re}{\operatorname{Re}}
+\DeclareMathOperator{\SL}{SL}
+\DeclareMathOperator*{\Res}{Res}
+
+% Don't have subsections appear in TOC
+\setcounter{tocdepth}{1}
+
+% TODO title/author
+\title{${1:title}}
+\author{${2:author(s)}}
+% TODO uncomment thanks?
+%\thanks{This material is based upon work supported by the National Science Foundation Graduate Research Fellowship Program under Grant No. DGE 0228243.}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+${3:Content}
+
+\end{document}
+endsnippet
+
+snippet grant "grant information" b
+This material is based upon work supported by the National Science Foundation Graduate Research Fellowship Program under Grant No. DGE 0228243.
+endsnippet
+
+snippet vert "vertical lines" i
+\lvert ${1:inside} \rvert${2}
+endsnippet
+
+# vim:ft=snippets:

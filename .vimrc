@@ -46,6 +46,7 @@ Plugin 'plasticboy/vim-markdown'
 Plugin 'kien/ctrlp.vim'
 Plugin 'bitc/vim-bad-whitespace'
 
+" Not used enough to count
 
 " A bunch of repos I've tried for smart django-autocompletion/docs
 "Bundle 'fs111/pydoc.vim'
@@ -117,11 +118,17 @@ set modeline
 set modelines=5
 
 " Make arrowkey resize viewports
-nnoremap <Left> :vertical resize +1<CR>
-nnoremap <Right> :vertical resize -1<CR>
-nnoremap <Up> :resize +1<CR>
-nnoremap <Down> :resize -1<CR>
+"nnoremap <Left> :vertical resize +1<CR>
+"nnoremap <Right> :vertical resize -1<CR>
+"nnoremap <Up> :resize +1<CR>
+"nnoremap <Down> :resize -1<CR>
 
+" Make arrow keys flip buffers
+nnoremap <Left> :bp!<CR>
+nnoremap <Right> :bn!<CR>
+
+" Reasonable html tag indenting
+let g:html_indent_inctags = "html,body,head,tbody"
 
 " A few new movements: does overide the original
 noremap j gj
@@ -134,10 +141,10 @@ noremap gk k
 noremap \ ,
 
 " Smart way to move between windows
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
+"map <C-j> <C-W>j
+"map <C-k> <C-W>k
+"map <C-h> <C-W>h
+"map <C-l> <C-W>l
 
 " Set my leader key to , instead of \
 let mapleader = ','
@@ -178,14 +185,22 @@ else
 endif
 
 " Two distinguished matchcolors for :match colorgroups
-hi Match1 ctermbg=30
-hi Match2 ctermbg=45
+hi Match1 ctermbg=4 ctermfg=0
+hi Match2 ctermbg=2 ctermfg=22
+hi Match3 ctermbg=3 ctermfg=0
 
 " Automatically uses plugins, and enables auto indentation
 filetype plugin indent on
-
-let g:SuperTabDefaultCompletionType = "<c-n>"
 "}}}2
+
+" SuperTab Settings {{{2 "
+let g:SuperTabDefaultCompletionType = "<c-n>"
+let g:SuperTabCrMapping = 0
+"}}}2
+
+" Markdown Settings {{{2 "
+" relevant plugin is vim-markdown
+highlight mkdListItem ctermbg=1
 
 " Ultisnips Settings {{{2 "
 " TODO This has to change - but default ruins SuperTab
@@ -221,6 +236,13 @@ let g:tex_flavor='latex'
 " Reset leader2 away from ',' which is my actual leader. In other words,
 " banish visual three letter things to hell, because they're not useful.
 let g:Tex_Leader2 = ''
+
+" }}}2
+
+" LaTeX Settings {{{2 "
+autocmd Filetype tex setlocal tabstop=2|set shiftwidth=2|set softtabstop=2
+autocmd Filetype tex setlocal colorcolumn=""
+autocmd Filetype tex hi Search ctermfg=3 ctermbg=0
 
 " }}}2
 
@@ -495,47 +517,35 @@ let g:syntastic_check_on_open=1
 let g:syntastic_loc_list_height=5
 let g:syntastic_python_checkers=['flake8', 'pylint']
 let g:syntastic_python_flake8_post_args='--ignore=E501'
+
+let g:syntastic_tex_chktex_post_args='-n3'
 " }}}2
 
 " delimitMate Settings {{{2 "
 au FileType tex let b:loaded_delimitMate = 1
-au FileType python,text,markdown inoremap <NUL> <C-r>=delimitMate#JumpAny()<CR>
+inoremap <C-J> <C-r>=delimitMate#JumpAny()<CR>
+au FileType python,text,markdown,html,css,c inoremap <NUL> @<C-r>=delimitMate#JumpAny()<CR>
+" inoremap <NUL> <C-r>=delimitMate#JumpAny()<CR>
 let delimitMate_autoclose = 0
 let delimitMate_expand_space = 1
+
+au FileType html,css let delimitMate_autoclose=1
+au FileType html,css let b:delimitMate_expand_space=1
+au FileType html,css let b:delimitMate_expand_cr=1
+
 let delimitMate_quotes = ""
 " }}}2
 
 " Startify settings {{{2 "
 hi StartifyHeader ctermfg=76
 let g:startify_custom_header = [
-    \ ':/:///_/_/_/_//\::/\:\///_/ /_//:/______/_/ :~\/::/ /____/ /___/  \/  \/+/\  /   ',
-    \ '/:///_/_/_/_/:\/::\ \:/__  __ /:/____/\  / \\:\/:/ _____  ____/\  /\  / /  \/    ',
-    \ ':///_/_/_/_//\::/\:\///_/ /_//:/____/\:\____\\::/ /____/ /___/  \/  \/+/\  /\    ',
-    \ '///_/_/_/_/:\/::\ \:/__  __ /:/____/\:\/____/\\/____________/\  /\  / /  \/  \   ',
-    \ '//_/_/_/_//\::/\:\///_/ /_//::::::/\:\/____/  /----/----/--/  \/  \/+/\  /\  /   ',
-    \ '/_/_/_/_/:\/::\ \:/__  __ /\:::::/\:\/____/ \/____/____/__/\  /\  / /  \/  \/_   ',
-    \ '_/_/_/_//\::/\:\///_/ /_//\:\::::\:\/____/ \_____________/  \/  \/+/\  /\  /     ',
-    \ '/_/_/_/:\/::\ \:/__  __ /\:\:\::::\/____/   \ _ _ _ _ _ /\  /\  / /  \/  \/___   ',
-    \ '_/_/_//\::/\:\///_/ /_//\:\:\:\    Startify  \_________/  \/  \/+/\  /\  /   /   ',
-    \ '/_/_/:\/::\ \:/__  __ /\:\:\:\:\______________\       /\  /\  / /  \/  \/___/_   ',
-    \ '_/_//\::/\:\///_/ /_//::\:\:\:\/*|__/_/_/_/__*/      /  \/  \/+/\  /\  /   /     ',
-    \ '/_/:\/::\ \:/__  __ /::::\:\:\/*_|_/_/_/|/|_*/\     /\  /\  / /  \/  \/___/___   ',
-    \ '_//\::/\:\///_/ /_//:\::::\:\/*__|/_/_/_|_|*/  \   /  \/  \/+/\  /\  /   /   /   ',
-    \ '/:\/::\ \:/__  __ /:\:\::::\/*____________*/    \ /\  /\  / /  \/  \/___/___/    ',
-    \ '/\::/\:\///_/ /_//:\:\:\     David Lowry-Duda    \  \/\\\/+/\  /\  /   /   /+/   ',
-    \ '\/::\ \:/__  __ /:\:\:\:\_________________________\ ///\\\/  \/  \/___/___/ /_   ',
-    \ '::/\:\///_/ /_//:\:\:\:\/_David.j.lowry@gmail.com_////::\\\  /\  /   /   /+/     ',
-    \ '::\ \:/__  __ /:\:\:\:\/_________________________/:\/____\\\/  \/___/___/ /___   ',
-    \ '/\:\///_/ /_//:\:\:\:\/_________________________/:::\    /\/\  /   /   /+/   /   ',
-    \ '\ \:/__  __ /:\:\:\:\/_________________________/:::::\  ///  \/___/___/ /___/_   ',
-    \ ':\///_/ /_//:\:\:\:\/_________________________/:\:::::\///\  /   /  __________   ',
-    \ '\:/__  __ /:\:\:\:\/_________________________/:::\:::::\/  \/___/__/\            ',
-    \ '///_/ /_//:\:\:\:\/_________________________/:\:::\:::::\  /   /  /::\           ',
-    \ '/__  __ /\::\:\:\/_________________________/_____::\:::::\/___/__/:/\:\          ',
-    \ '/_/ /_//::\::\:\/_____________________/\/_/_/_/_/\  \           /::\ \:\         ',
-    \ '_  __ /:\::\:8\/_____________________/\/\   /\_\\/\  \ 8       /:/\:\ \:\        ',
-    \ '/ /_//\     \|______________________//\\/\::\/__\\/\  \|______/::\ \:\ \:\       ',
-    \ ' __ /  \  \                        /:\/:\/\_______\/\        /:/\:\ \:\/::\      ',
+    \ '/\::/\:\///_/ /_//:\:\:\     David Lowry-Duda    \  \/\\\/+/\  /\  /   /   /+/',
+    \ '\/::\ \:/__  __ /:\:\:\:\_________________________\ ///\\\/  \/  \/___/___/ /_',
+    \ '::/\:\///_/ /_//:\:\:\:\/_David.j.lowry@gmail.com_////::\\\  /\  /   /   /+/',
+    \ '::\ \:/__  __ /:\:\:\:\/_________________________/:\/____\\\/  \/___/___/ /___',
+    \ '/\:\///_/ /_//:\:\:\:\/_________________________/:::\    /\/\  /   /   /+/   /',
+    \ '\ \:/__  __ /:\:\:\:\/_________________________/:::::\  ///  \/___/___/ /___/_',
+    \ ':\///_/ /_//:\:\:\:\/_________________________/:\:::::\///\  /   /  __________',
     \ '',
     \]
 let g:startify_bookmarks = [ '~/Dropbox/TODO.markdown', '~/.vimrc']
