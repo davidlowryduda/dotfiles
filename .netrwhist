@@ -1,8 +1,3 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =6
-let g:netrw_dirhist_1='/users/djlowry/mail/.imap'
-let g:netrw_dirhist_2='/users/djlowry/mail/.imap/sent-mail'
-let g:netrw_dirhist_3='/users/djlowry/mail/.imap'
-let g:netrw_dirhist_4='/users/djlowry/mail'
-let g:netrw_dirhist_5='/users/djlowry'
-let g:netrw_dirhist_6='/users/djlowry/.vim/ftplugin/latex-suite/macros'
+let g:netrw_dirhist_cnt =1
+let g:netrw_dirhist_1='/home/djlowry/.vim'

@@ -34,7 +34,7 @@ Plugin 'wellle/targets.vim'
 Plugin 'tmhedberg/SimpylFold'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
-Plugin 'Raimondi/delimitMate'
+" Plugin 'Raimondi/delimitMate'
 
 " vim-script
 Plugin 'vim-scripts/TaskList.vim'
@@ -45,6 +45,7 @@ Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'kien/ctrlp.vim'
 Plugin 'bitc/vim-bad-whitespace'
+Plugin 'lervag/vimtex'
 
 " Not used enough to count
 
@@ -140,6 +141,12 @@ noremap gk k
 
 noremap \ ,
 
+" Automatically go inside delimiters if typed back to back
+inoremap () ()<ESC>i
+inoremap {} {}<ESC>i
+inoremap [] []<ESC>i
+inoremap <C-L> <C-O>a
+
 " Smart way to move between windows
 "map <C-j> <C-W>j
 "map <C-k> <C-W>k
@@ -148,6 +155,8 @@ noremap \ ,
 
 " Set my leader key to , instead of \
 let mapleader = ','
+let maplocalleader = ','
+
 
 " Make Y act like it should
 nmap Y y$
@@ -205,29 +214,31 @@ highlight mkdListItem ctermbg=1
 " Ultisnips Settings {{{2 "
 " TODO This has to change - but default ruins SuperTab
 let g:UltiSnipsExpandTrigger='<leader>E'
-"let g:UltiSnipsJumpForwardTrigger='<leader>E'
-let g:UltiSnipsJumpForwardTrigger='<NUL>'
+let g:UltiSnipsJumpForwardTrigger='<C-j>'
+"let g:UltiSnipsJumpForwardTrigger='<NUL>'
+"map <expr><c-j> UltiSnips#ExpandSnippetOrJump()
 let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets"]
 " }}}2
 
 " vim-latex aka latex-suite Settings {{{2 "
 " maps <C-space> to IMAP_JumpForward, which is usually <C-j>. 
 " imap <NUL> <Plug>IMAP_JumpForward
-" REMEMBER THAT THIS MIGHT NOT WORK IN TERMINALS (BUT SHOULD IN GUI)
-nmap <c-space> <Plug>IMAP_JumpForward
-imap <c-space> <Plug>IMAP_JumpForward
-vmap <c-space> <Plug>IMAP_JumpForward
-nmap <NUL> <Plug>IMAP_JumpForward
-imap <NUL> <Plug>IMAP_JumpForward
-vmap <NUL> <Plug>IMAP_JumpForward
+" remember that this might not work in terminals (but should in gui)
+" DEPRECATED --- ONLY FOR USE WITH LATEX-SUITE
+"nmap <c-space> <Plug>IMAP_JumpForward
+"imap <c-space> <Plug>IMAP_JumpForward
+"vmap <c-space> <Plug>IMAP_JumpForward
+"nmap <NUL> <Plug>IMAP_JumpForward
+"imap <NUL> <Plug>IMAP_JumpForward
+"vmap <NUL> <Plug>IMAP_JumpForward
 
 " Compile to pdf
-let g:Tex_DefaultTargetFormat="pdf"
+"let g:Tex_DefaultTargetFormat="pdf"
 
 " grep will sometimes skip displaying file name if you
 " search in a single file, confusing vim-latex. Set grep to always generate
 " file-name.
-set grepprg=grep\ -nH\ $*
+"set grepprg=grep\ -nH\ $*
 
 " Set filetype of empty .tex files to 'tex' instead of 'plaintex', which is
 " the default
@@ -235,7 +246,7 @@ let g:tex_flavor='latex'
 
 " Reset leader2 away from ',' which is my actual leader. In other words,
 " banish visual three letter things to hell, because they're not useful.
-let g:Tex_Leader2 = ''
+"let g:Tex_Leader2 = ''
 
 " }}}2
 
@@ -470,6 +481,8 @@ if !exists('g:neocomplete#sources#omni#input_patterns')
     let g:neocomplete#sources#omni#input_patterns = {}
 endif
 let g:neocomplete#sources#omni#input_patterns.python='[^. \t]\.\w*'
+let g:neocomplete#sources#omni#input_patterns.tex =
+      \ '\v\\\a*(ref|cite)\a*([^]]*\])?\{([^}]*,)*[^}]*'
 
 if !exists('g:neocomplete#keyword_patterns')
   let g:neocomplete#keyword_patterns = {}
@@ -522,18 +535,23 @@ let g:syntastic_tex_chktex_post_args='-n3'
 " }}}2
 
 " delimitMate Settings {{{2 "
-au FileType tex let b:loaded_delimitMate = 1
-inoremap <C-J> <C-r>=delimitMate#JumpAny()<CR>
-au FileType python,text,markdown,html,css,c inoremap <NUL> @<C-r>=delimitMate#JumpAny()<CR>
+"let loaded_delimitMate=1
+""let delimitMate_autoclose=0
+""let delimitMate_expand_space=1
+
+"au FileType tex unlet loaded_delimitMate
+"au FileType tex let b:delimitMate_autoclose=0
+
+""inoremap <C-J> <C-r>=delimitMate#JumpAny()<CR>
+"
+" au FileType python,text,markdown,html,css,c inoremap <NUL> @<C-r>=delimitMate#JumpAny()<CR>
 " inoremap <NUL> <C-r>=delimitMate#JumpAny()<CR>
-let delimitMate_autoclose = 0
-let delimitMate_expand_space = 1
 
-au FileType html,css let delimitMate_autoclose=1
-au FileType html,css let b:delimitMate_expand_space=1
-au FileType html,css let b:delimitMate_expand_cr=1
+""au FileType html,css let delimitMate_autoclose=1
+""au FileType html,css let b:delimitMate_expand_space=1
+""au FileType html,css let b:delimitMate_expand_cr=1
 
-let delimitMate_quotes = ""
+""let delimitMate_quotes = ""
 " }}}2
 
 " Startify settings {{{2 "
