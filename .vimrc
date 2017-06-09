@@ -1,5 +1,7 @@
 " David Lowry-Duda's .vimrc file configuration"
 " :set foldlevel=1 for niceness
+scriptencoding utf-8
+set encoding=utf-8
 
 " Vundle Startup {{{2 "
 " Firstly, a few things for Vundle to automanage things
@@ -11,23 +13,23 @@ call vundle#begin()
 
 " let Vundle manage Vundle
 " required!
-Plugin 'gmarik/Vundle.vim'
+"Plugin 'gmarik/Vundle.vim'
+Plugin 'VundleVim/Vundle.vim'
 
 " My Bundles here:
 "
 " original repos on github
-Plugin 'Lokaltog/vim-easymotion'
 Plugin 'ervandew/supertab.git'
 Plugin 'altercation/vim-colors-solarized.git'
+Plugin 'noahfrederick/vim-noctu.git'
 Plugin 'scrooloose/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'luochen1990/rainbow'
-Plugin 'klen/python-mode'
+"Plugin 'klen/python-mode'
 Plugin 'SirVer/UltiSnips'
 Plugin 'honza/vim-snippets'
-Plugin 'mhinz/vim-startify'
 Plugin 'scrooloose/syntastic'
-Plugin 'davidhalter/jedi-vim'
+"Plugin 'davidhalter/jedi-vim'
 Plugin 'Shougo/neocomplete'
 Plugin 'bling/vim-airline'
 Plugin 'wellle/targets.vim'
@@ -35,25 +37,24 @@ Plugin 'tmhedberg/SimpylFold'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 " Plugin 'Raimondi/delimitMate'
+" tabular is for vim-markdown
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'lervag/vimtex'
+Plugin 'bitc/vim-bad-whitespace'
+Plugin 'justinmk/vim-sneak'
 
 " vim-script
 Plugin 'vim-scripts/TaskList.vim'
 
 " In trial
-" tabular is for vim-markdown
-Plugin 'godlygeek/tabular'
-Plugin 'plasticboy/vim-markdown'
+Plugin 'mhinz/vim-startify'
 Plugin 'kien/ctrlp.vim'
-Plugin 'bitc/vim-bad-whitespace'
-Plugin 'lervag/vimtex'
+Plugin 'junegunn/limelight.vim'
+Plugin 'junegunn/goyo.vim'
+"Plugin 'Lokaltog/vim-easymotion'
+Plugin 'beloglazov/vim-online-thesaurus'
 
-" Not used enough to count
-
-" A bunch of repos I've tried for smart django-autocompletion/docs
-"Bundle 'fs111/pydoc.vim'
-"Bundle 'xolox/vim-pyref'
-"Bundle 'lambdalisue/vim-django-support'
-"Bundle 'sontek/rope-vim'
 
 call vundle#end()               " required
 filetype plugin indent on       " required too!
@@ -78,11 +79,11 @@ set mouse=a
 "set hlsearch
 set ruler
 set title
-set completeopt=menu,preview
-set tabstop=4
-set shiftwidth=4
+set completeopt=menu,preview,longest
+set tabstop=2
+set shiftwidth=2
 set expandtab
-set softtabstop=4
+set softtabstop=2
 set laststatus=2
 " Make wordwraps occur on word
 set lbr
@@ -91,6 +92,7 @@ set undolevels=1000
 set history=100
 set autoread
 set lazyredraw
+set ttyfast
 set backspace=start,indent,eol
 
 set foldmethod=marker
@@ -117,6 +119,7 @@ set noswapfile
 " These are default, but not on MAC (for whatever reason)
 set modeline
 set modelines=5
+
 
 " Make arrowkey resize viewports
 "nnoremap <Left> :vertical resize +1<CR>
@@ -146,6 +149,10 @@ inoremap () ()<ESC>i
 inoremap {} {}<ESC>i
 inoremap [] []<ESC>i
 inoremap <C-L> <C-O>a
+inoremap <C-H> <C-O>i
+
+" Clear highlighting in normal mode
+nnoremap <C-L> :noh<CR>:redr!<CR>
 
 " Smart way to move between windows
 "map <C-j> <C-W>j
@@ -162,7 +169,8 @@ let maplocalleader = ','
 nmap Y y$
 
 " Highlight column 80 as warning and 120 as superdanger
-let &colorcolumn="80,".join(range(120,999),",")
+" let &colorcolumn="80,".join(range(120,999),",")
+let &colorcolumn="80"
 
 " Toggle Spell-check
 nmap <silent> <leader>s :set spell!<CR>
@@ -187,9 +195,10 @@ else
     if $COLORTERM == 'xfce4-terminal'
         colorscheme noctu
     else
-        let g:solarized_termcolors=256
-        set background=light
-        colorscheme solarized
+        "let g:solarized_termcolors=256
+        "set background=dark
+        "colorscheme solarized
+        colorscheme noctu
     endif
 endif
 
@@ -202,6 +211,16 @@ hi Match3 ctermbg=3 ctermfg=0
 filetype plugin indent on
 "}}}2
 
+" Limelight Settings {{{2 "
+let g:limelight_conceal_ctermfg = "gray"
+let g:limelight_default_coefficient = 0.7
+let g:limelight_priority = -1
+" how many paragraphs to color on each side
+let g:limelight_paragraph_span = 0
+nnoremap ,G :Goyo 100<CR>
+nnoremap ,L :Limelight!!<CR>
+"}}}2
+
 " SuperTab Settings {{{2 "
 let g:SuperTabDefaultCompletionType = "<c-n>"
 let g:SuperTabCrMapping = 0
@@ -209,7 +228,9 @@ let g:SuperTabCrMapping = 0
 
 " Markdown Settings {{{2 "
 " relevant plugin is vim-markdown
+autocmd Filetype mkd setlocal ft=markdown
 highlight mkdListItem ctermbg=1
+"}}}2
 
 " Ultisnips Settings {{{2 "
 " TODO This has to change - but default ruins SuperTab
@@ -250,10 +271,21 @@ let g:tex_flavor='latex'
 
 " }}}2
 
+" HTML Settings {{{2 "
+autocmd Filetype html setlocal tabstop=2|set shiftwidth=2|set softtabstop=2
+
+" }}}2
+
+
 " LaTeX Settings {{{2 "
 autocmd Filetype tex setlocal tabstop=2|set shiftwidth=2|set softtabstop=2
 autocmd Filetype tex setlocal colorcolumn=""
 autocmd Filetype tex hi Search ctermfg=3 ctermbg=0
+
+let g:vimtex_fold_enabled = 1
+let g:vimtex_imaps_enabled = 0
+let g:vimtex_indent_enabled = 0
+let g:vimtex_indent_bib_enabled = 0
 
 " }}}2
 
@@ -296,12 +328,14 @@ let g:airline_symbols.linenr = '¶'
 " Add a toggle, to a lousy key now, though
 map <Leader>a <plug>NERDTreeTabsToggle<CR>
 " Make it so that NERDTree plays nicely with Startify on startup
-autocmd VimEnter *
-            \ if !argc() |
-            \   Startify |
-            \   NERDTree |
-            \   execute "normal \<c-w>w" |
-            \ endif
+
+"autocmd VimEnter *
+"            \ if !argc() |
+"            \   Startify |
+"            \   NERDTree |
+"            \   execute "normal \<c-w>w" |
+"            \ endif
+
 " }}}2
 
 " TaskList Settings {{{2 "
@@ -456,25 +490,26 @@ let g:pymode_folding = 1
 
 " EasyMotion Settings {{{2 "
 " Set up two-character bidirectional sneak
-nmap s <Plug>(easymotion-s2)
-xmap s <Plug>(easymotion-s2)
-omap z <Plug>(easymotion-s2)
+"nmap s <Plug>(easymotion-s2)
+"xmap s <Plug>(easymotion-s2)
+"omap z <Plug>(easymotion-s2)
 
 " And repeat vim-sneak style
-nmap <Leader>; <Plug>(easymotion-next)
-nmap <Leader>, <Plug>(easymotion-prev)
+"nmap <Leader>; <Plug>(easymotion-next)
+"nmap <Leader>, <Plug>(easymotion-prev)
 
 " Remap default leader to <Leader> instead of <Leader><Leader>
-let g:EasyMotion_leader_key = '<Leader>'
+"let g:EasyMotion_leader_key = '<Leader>'
 " }}}2
 "
 " neocomplete Settings {{{2 "
 " Use neocomplete
-let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_at_startup=1
 " Use smartcase
-let g:neocomplete#enable_smart_case = 1
-let g:neocomplete#enable_auto_select = 0
-let g:neocomplete#max_list = 30
+let g:neocomplete#enable_smart_case=1
+let g:neocomplete#disable_auto_complete=1
+let g:neocomplete#enable_auto_select=0
+let g:neocomplete#max_list=30
 
 " I don't fully understand how this works, but omni is necessary for preview
 if !exists('g:neocomplete#sources#omni#input_patterns')
@@ -521,7 +556,7 @@ endfunction
 nnoremap <silent><Leader>NC :call ToggleNeoComplete()<CR>
 
 " Generic omni completion
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType python setlocal omnifunc=python3complete#Complete
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 " }}}2
 
@@ -531,7 +566,15 @@ let g:syntastic_loc_list_height=5
 let g:syntastic_python_checkers=['flake8', 'pylint']
 let g:syntastic_python_flake8_post_args='--ignore=E501'
 
+let g:syntastic_text_checkers = ['language-check']
+let g:syntastic_text_language_check_args = '--language=en-US'
+
 let g:syntastic_tex_chktex_post_args='-n3'
+" }}}2
+
+" ctrlp settings {{{2
+let g:ctrlp_extensions = ['dir', 'line']
+
 " }}}2
 
 " delimitMate Settings {{{2 "
@@ -580,3 +623,11 @@ let g:startify_list_order = [
       \ ]
 
 "}}}2
+
+" vimtex settings {{{2 "
+let g:vimtex_fold_manual=1
+
+" }}}2
+
+
+set showcmd

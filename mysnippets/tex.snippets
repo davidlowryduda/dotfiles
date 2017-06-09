@@ -4,6 +4,9 @@ snippet template "Standard leqno[11] template" b
 \documentclass[11pt,reqno]{amsart}
 % We ain't got no time for eq. nums. on the left
 
+% Enable UTF-8 encodings for input, to enter é instead of \'{e}.
+\usepackage[utf8]{inputenc}
+
 % The key is redundancy is key
 \usepackage{amsmath,amsthm,amssymb}
 \usepackage{amssymb}
@@ -15,6 +18,10 @@ snippet template "Standard leqno[11] template" b
 
 % For full page usage, shockingly
 %\usepackage{fullpage}
+
+% Don't worry about starred environments. YOU are the star!
+\usepackage{mathtools}
+\mathtoolsset{showonlyrefs}
 
 % For ease in writing labels and references
 %\usepackage{showkeys}
@@ -45,13 +52,14 @@ anchorcolor=darkblue,citecolor=darkblue}
 
 \numberwithin{equation}{section}
 
-\newcommand{\Z}{\mathbb{Z}}
-\newcommand{\C}{\mathbb{C}}
 % Nongross real and imaginary parts
 \renewcommand{\Im}{\operatorname{Im}}
 \renewcommand{\Re}{\operatorname{Re}}
 \DeclareMathOperator{\SL}{SL}
 \DeclareMathOperator*{\Res}{Res}
+
+\newcommand{\davidnote}[1]{\marginpar{\footnotesize{\textcolor{Plum}{David: #1}}}}
+\newcommand{\tomnote}[1]{\marginpar{\footnotesize{\textcolor{MidnightBlue}{Tom: #1}}}}
 
 % Don't have subsections appear in TOC
 \setcounter{tocdepth}{1}
@@ -69,6 +77,10 @@ anchorcolor=darkblue,citecolor=darkblue}
 
 ${3:Content}
 
+\vspace{20 mm}
+\bibliographystyle{alpha}
+\bibliography{bibliofile}
+
 \end{document}
 endsnippet
 
@@ -80,4 +92,13 @@ snippet vert "vertical lines" i
 \lvert ${1:inside} \rvert${2}
 endsnippet
 
+snippet tester "some tests" i
+We are ${1:totally}
+
+doing a ${2:lot of}
+
+realy and $1 cool
+
+${3: things}
+endsnippet
 # vim:ft=snippets:
