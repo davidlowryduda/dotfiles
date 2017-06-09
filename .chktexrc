@@ -1,0 +1,15 @@
+
+## Enable quotation checking to want
+# The punctuation is "inside the quote." (Traditional)
+# and not
+# The punctuation is "outside the quote". (Logical)
+
+QuoteStyle = Traditional
+
+## Remove care about triple derivatives
+
+CmdLine
+{
+    -n23
+    -n29
+}
