@@ -1,0 +1,74 @@
+!! vim: set ft=xdefaults:
+
+! some settings, forget what many of these do...
+xterm*dynamicColors     : true
+xterm*utf8              : 2
+xterm*eightBitInput     : false
+xterm*saveLines         : 5000
+xterm*altSendsEscape    : false
+! xterm*metaSendsEscape   : false
+xterm*scrollTtyKeypress : true
+xterm*scrollTtyOutput   : true
+xterm*renderFont        : true
+xterm*toolBar           : false
+xterm*showBlinkAsBold   : true
+xterm*jumpScroll        : true
+xterm*bellIsUrgent      : true
+xterm*highlightSelection: true
+xterm*cuteNewline       : true
+xterm*metaSendsEscape   : true
+
+! some keybindings
+!xterm*VT100*Translations: #override\
+!  Meta <Key> equal           : larger-vt-font() \n\
+!  Meta <Key> minus           : smaller-vt-font()\n\
+!  Meta <Key> BackSpace       : set-render-font(toggle)\n\
+!  Meta <Key> 0               : set-render-font(toggle)\n\
+!  Meta <Key> ]               : spawn-new-terminal()\n\
+
+! fonts
+xterm*faceName:           Inconsolata
+xterm*font              : -*-fixed-*-*-*-12-*
+
+!xterm*font              : -*-terminus-medium-*-*-*-24-*-*-*-*-*-*-*
+!xterm*font1             : -*-terminus-medium-*-*-*-16-*-*-*-*-*-*-*
+!xterm*font2             : -*-terminus-medium-*-*-*-18-*-*-*-*-*-*-*
+!xterm*font3             : -*-terminus-medium-*-*-*-20-*-*-*-*-*-*-*
+!xterm*font4             : -*-terminus-medium-*-*-*-24-*-*-*-*-*-*-*
+!xterm*font5             : -*-terminus-medium-*-*-*-28-*-*-*-*-*-*-*
+!xterm*font6             : -*-terminus-medium-*-*-*-32-*-*-*-*-*-*-*
+xterm*faceSize          : 18
+!xterm*faceSize1         : 19
+!xterm*faceSize2         : 21
+!xterm*faceSize3         : 23
+!xterm*faceSize4         : 25
+!xterm*faceSize5         : 27
+!xterm*faceSize6         : 32
+!
+!! example colorscheme: "ftl"
+!*background: #1b1716
+!*foreground: #e8f4e6
+!!!black
+!*color0:  #1b1716
+!*color8:  #373737
+!!!red
+!*color1:  #d6441f
+!*color9:  #d6441f
+!!!green
+!*color2:  #657d59
+!*color10: #657d59
+!!!yellow (orange)
+!*color3:  #fc9950
+!*color11: #fc9950
+!!!blue
+!*color4:  #1b81fd
+!*color12: #1b81fd
+!!!magenta
+!*color5:  #8b6493
+!*color13: #8b6493
+!!!cyan
+!*color6:  #2acad2
+!*color14: #2acad2
+!!!white
+!*color7:  #e8f4e6
+!*color15: #e8f4e6
