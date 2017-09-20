@@ -54,6 +54,28 @@ function _notecomplete {
 }
 complete -F _notecomplete n
 
+
+# Setup my own wmanager
+function wman() {
+    if [ $# -eq 0 ]; then
+        ls -c ~/TaskList/wman/
+    else $EDITOR ~/TaskList/wman/"$*".note
+    fi
+}
+
+function wmanls(){
+    ls -c ~/TaskList/wman/ | grep "$*"
+}
+
+# Setup autocompletion for note command
+function _wmancomplete {
+    local cur=${COMP_WORDS[COMP_CWORD]}
+    COMPREPLY=( $(compgen -W "$(ls ~/TaskList/wman | sed 's/.note//')" -- $cur) )
+}
+complete -F _wmancomplete wman
+
+
+
 # quick TeX junk file remover
 #alias rmTeX="bash ~/bin/rmTeX.sh"
 export PATH="$HOME/bin:$PATH"
