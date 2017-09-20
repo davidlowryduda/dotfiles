@@ -43,18 +43,19 @@ Plugin 'plasticboy/vim-markdown'
 Plugin 'lervag/vimtex'
 Plugin 'bitc/vim-bad-whitespace'
 Plugin 'justinmk/vim-sneak'
+Plugin 'kien/ctrlp.vim'
 
 " vim-script
 Plugin 'vim-scripts/TaskList.vim'
 
 " In trial
 Plugin 'mhinz/vim-startify'
-Plugin 'kien/ctrlp.vim'
 Plugin 'junegunn/limelight.vim'
 Plugin 'junegunn/goyo.vim'
 "Plugin 'Lokaltog/vim-easymotion'
 Plugin 'beloglazov/vim-online-thesaurus'
 Plugin 'joereynolds/gtags-scope'
+Plugin 'tpope/vim-fugitive'
 
 
 call vundle#end()               " required
@@ -96,6 +97,8 @@ set lazyredraw
 set ttyfast
 set backspace=start,indent,eol
 set nowrap
+
+set notagrelative
 
 set foldmethod=marker
 set foldlevel=1
