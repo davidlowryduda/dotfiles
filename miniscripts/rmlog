@@ -1,0 +1,13 @@
+#!/bin/sh
+
+#
+# Removes *.log files from directories.
+# [Don't do this if there are worthwhile logs around].
+
+#echo "Removing .log files..."
+
+#rm -v *.log 2> /dev/null
+
+#echo "Removal complete."
+
+echo "Deprecated. Nothing done."
