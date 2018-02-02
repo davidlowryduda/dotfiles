@@ -1,0 +1,25 @@
+#!/bin/sh
+
+#
+# Removes worthless TeX files from directories. [Don't do while still compiling
+# TeX resources]
+
+echo "Removing auxiliary LaTeX files..."
+echo "Note: .log files are not removed by this command."
+
+rm -v *.aux 2> /dev/null
+rm -v *.nav 2> /dev/null
+rm -v *.snm 2> /dev/null
+rm -v *.bbl 2> /dev/null
+rm -v *.blg 2> /dev/null
+rm -v *.spl 2> /dev/null
+rm -v *.toc 2> /dev/null
+rm -v *.out 2> /dev/null
+rm -v *.fdb_latexmk 2> /dev/null
+rm -v *.synctex.gz 2> /dev/null
+rm -v *.fls 2> /dev/null
+rm -v *.cb 2> /dev/null
+rm -v *.cb2 2> /dev/null
+
+echo "Removal complete."
+# Don't do log, as I use log for other things
