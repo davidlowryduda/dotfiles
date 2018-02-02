@@ -1,1 +1,1 @@
-set--option -g default-command bash
+set-option -g default-command bash
