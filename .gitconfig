@@ -1,0 +1,7 @@
+[user]
+	email = davidlowryduda@davidlowryduda.com
+	name = David Lowry-Duda
+
+[alias]
+  l = "!. ~/.githelpers && pretty_git_log"
+
