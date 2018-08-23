@@ -181,4 +181,10 @@ export INFOPATH=$INFOPATH:/usr/local/texlive/2017/texmf-dist/doc/info
 export MANPATH=$MANPATH:/usr/local/texlive/2017/texmf-dist/doc/man
 
 # set up tasklist
-alias t='python2 ~/TaskList/tasks/t/t.py --task-dir ~/TaskList/tasks --list tasks.txt'
+alias t='python ~/TaskList/tasks/tld/tld.py --date --task-dir ~/TaskList/tasks --list tasks.txt'
+
+export MANPATH="$MANPATH:$HOME/TaskList/man"
+export MANSECT="1:n:l:8:3:2:3posix:3pm:3perl:5:4:9:6:7:eg"
+
+## Temporary moments
+source .nowrc
