@@ -1,0 +1,4 @@
+python ~/TaskList/tagpy/simple_tagging.py \
+       --dir ~/TaskList/tagpy \
+       --db tagpy.db \
+       $*

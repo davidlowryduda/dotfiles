@@ -28,14 +28,15 @@ Plugin 'luochen1990/rainbow'
 "Plugin 'klen/python-mode'
 Plugin 'SirVer/UltiSnips'
 Plugin 'honza/vim-snippets'
-Plugin 'scrooloose/syntastic'
-"Plugin 'davidhalter/jedi-vim'
+"Plugin 'scrooloose/syntastic'
+Plugin 'davidhalter/jedi-vim'
 Plugin 'Shougo/neocomplete'
 Plugin 'bling/vim-airline'
 Plugin 'wellle/targets.vim'
 Plugin 'tmhedberg/SimpylFold'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-fugitive'
 " Plugin 'Raimondi/delimitMate'
 " tabular is for vim-markdown
 Plugin 'godlygeek/tabular'
@@ -43,6 +44,7 @@ Plugin 'plasticboy/vim-markdown'
 Plugin 'lervag/vimtex'
 Plugin 'bitc/vim-bad-whitespace'
 Plugin 'justinmk/vim-sneak'
+Plugin 'l04m33/vlime', {'rtp': 'vim/'}
 
 " vim-script
 Plugin 'vim-scripts/TaskList.vim'
@@ -54,6 +56,9 @@ Plugin 'junegunn/limelight.vim'
 Plugin 'junegunn/goyo.vim'
 "Plugin 'Lokaltog/vim-easymotion'
 Plugin 'beloglazov/vim-online-thesaurus'
+Plugin 'justmao945/vim-clang'
+
+Plugin 'w0rp/ale'
 
 
 call vundle#end()               " required
@@ -80,6 +85,9 @@ set mouse=a
 set ruler
 set title
 set completeopt=menu,preview,longest
+set tw=80
+set wildmenu
+set wildmode=list:longest
 set tabstop=2
 set shiftwidth=2
 set expandtab
@@ -98,6 +106,8 @@ set backspace=start,indent,eol
 set foldmethod=marker
 set foldlevel=1
 set foldopen+=insert
+
+set nojoinspaces
 
 "set showmatch
 "set cursorline
@@ -144,12 +154,13 @@ noremap gk k
 
 noremap \ ,
 
+
 " Automatically go inside delimiters if typed back to back
-inoremap () ()<ESC>i
-inoremap {} {}<ESC>i
-inoremap [] []<ESC>i
-inoremap <C-L> <C-O>a
-inoremap <C-H> <C-O>i
+"inoremap () ()<ESC>i
+"inoremap {} {}<ESC>i
+"inoremap [] []<ESC>i
+"inoremap <C-L> <C-O>a
+"inoremap <C-H> <C-O>i
 
 " Clear highlighting in normal mode
 nnoremap <C-L> :noh<CR>:redr!<CR>
@@ -171,6 +182,7 @@ nmap Y y$
 " Highlight column 80 as warning and 120 as superdanger
 " let &colorcolumn="80,".join(range(120,999),",")
 let &colorcolumn="80"
+autocmd BufEnter *.html setlocal cc=
 
 " Toggle Spell-check
 nmap <silent> <leader>s :set spell!<CR>
@@ -207,6 +219,27 @@ hi Match1 ctermbg=4 ctermfg=0
 hi Match2 ctermbg=2 ctermfg=22
 hi Match3 ctermbg=3 ctermfg=0
 
+autocmd CursorMoved * exe printf('match WordUnder /\V\<%s\>/', escape(expand('<cword>'), '/\'))
+highlight WordUnder ctermfg=8
+"WordUnder actually gets clobbered by my colorscheme
+
+autocmd ColorScheme *
+      \ highlight WordUnder ctermfg=7 ctermbg=23 guifg='LightCyan' |
+      \ hi Match1 ctermbg=4 ctermfg=0  |
+      \ hi Match2 ctermbg=2 ctermfg=22 |
+      \ hi Match3 ctermbg=3 ctermfg=0
+
+" Add trailing whitespace deliberately on mailfiles.
+augroup mutt_mail
+  autocmd!
+  " One could add the w format option if one wants to use mutt's 'text_flowed'
+  " option to automatically reflow text appropriately. Or one can hardwrap.
+  autocmd BufNewFile,BufRead *.mail setlocal ft=mail
+  autocmd FileType mail setlocal formatoptions+=watqc
+  autocmd FileType mail setlocal tw=72
+  " autocmd FileType mail HideBadWhitespace
+augroup END
+
 " Automatically uses plugins, and enables auto indentation
 filetype plugin indent on
 "}}}2
@@ -229,7 +262,9 @@ let g:SuperTabCrMapping = 0
 " Markdown Settings {{{2 "
 " relevant plugin is vim-markdown
 autocmd Filetype mkd setlocal ft=markdown
+autocmd BufNewFile,BufRead *.note setlocal ft=markdown
 highlight mkdListItem ctermbg=1
+let g:vim_markdown_new_list_item_indent = 2
 "}}}2
 
 " Ultisnips Settings {{{2 "
@@ -242,7 +277,7 @@ let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets"]
 " }}}2
 
 " vim-latex aka latex-suite Settings {{{2 "
-" maps <C-space> to IMAP_JumpForward, which is usually <C-j>. 
+" maps <C-space> to IMAP_JumpForward, which is usually <C-j>.
 " imap <NUL> <Plug>IMAP_JumpForward
 " remember that this might not work in terminals (but should in gui)
 " DEPRECATED --- ONLY FOR USE WITH LATEX-SUITE
@@ -276,7 +311,6 @@ autocmd Filetype html setlocal tabstop=2|set shiftwidth=2|set softtabstop=2
 
 " }}}2
 
-
 " LaTeX Settings {{{2 "
 autocmd Filetype tex setlocal tabstop=2|set shiftwidth=2|set softtabstop=2
 autocmd Filetype tex setlocal colorcolumn=""
@@ -297,10 +331,19 @@ autocmd Filetype python set tabstop=4|set shiftwidth=4|set expandtab
 let g:SimpylFold_docstring_preview = 1
 " }}}2
 
+" ALE Settings {{{2
+let g:ale_enabled=1
+let g:ale_lint_on_text_changed=0
+let g:ale_cpp_gcc_options = '--std=c++14 -Wall -Wextra -pedantic'
+let g:ale_cpp_clangcheck_options='-Wall -std=c++14'
+
+" }}}
+
 " airline Settings {{{2 "
 "set laststatus=2 is always good to ensure
-let g:airline#extensions#syntastic#enabled = 1
-let g:airline#exteion#tabline#enabled = 1
+"let g:airline#extensions#syntastic#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#ale#enabled = 1
 " Don't show git branch
 let g:airline_section_b = ''
 
@@ -313,15 +356,17 @@ let g:airline_section_b = ''
 
 "let g:airline_theme=solarized
 "let g:airline_exclude_preview = 0
-let g:airline_left_sep = '▶'
-let g:airline_right_sep = '◀'
-
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
-let g:airline_symbols.paste = 'ρ'
-let g:airline_symbols.whitespace = 'Ξ'
-let g:airline_symbols.linenr = '¶'
+
+let g:airline_powerline_fonts = 1
+"let g:airline_left_sep = '▶'
+"let g:airline_right_sep = '◀'
+
+"let g:airline_symbols.paste = 'ρ'
+"let g:airline_symbols.whitespace = 'Ξ'
+"let g:airline_symbols.linenr = '¶'
 " }}}2
 
 " NerdTree Settings {{{2 "
@@ -570,6 +615,11 @@ let g:syntastic_text_checkers = ['language-check']
 let g:syntastic_text_language_check_args = '--language=en-US'
 
 let g:syntastic_tex_chktex_post_args='-n3'
+
+let g:syntastic_mode_map = {"passive_filetypes": ["python"]}
+
+let g:syntastic_cpp_compiler = 'g++'
+let g:syntastic_cpp_compiler_options = ' -std=c++14'
 " }}}2
 
 " ctrlp settings {{{2
@@ -626,8 +676,29 @@ let g:startify_list_order = [
 
 " vimtex settings {{{2 "
 let g:vimtex_fold_manual=1
+autocmd Filetype tex setlocal indentexpr=
+" }}}2
+
+" vim-clang settings {{{2
+let g:clang_auto=0
+let g:clang_cpp_optinos='=std=c++14'
+
 
 " }}}2
 
+
+" handy functions
+"
+function! FastTexToggle()
+  if g:vimtex_quickfix_mode
+    let g:vimtex_quickfix_mode = 0
+    nnoremap ,A :VimtexCompileSS<CR>
+    execute "ALEDisable"
+  else
+    let g:vimtex_quickfix_mode = 2
+    nunmap ,A
+    execute "ALEEnable"
+  endif
+endfunction
 
 set showcmd

@@ -1,0 +1,1 @@
+python ~/TaskList/email/simple_addr.py -d ~/TaskList/email -f .address_list $*
